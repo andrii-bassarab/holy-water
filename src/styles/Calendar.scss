@@ -1,0 +1,111 @@
+.calendar {
+  margin: 0 auto;
+  max-width: 1150px;
+
+  @media (max-width: 1200px) {
+    max-width: 800px;
+  }
+
+  @media (max-width: 800px) {
+    max-width: 590px;
+  }
+
+  @media (max-width: 600px) {
+    max-width: 450px;
+  }
+
+  &__container {
+    margin: 0 50px;
+  }
+
+  &__layout {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(7, 150px);
+    position: relative;
+    border: 1px solid #000;
+
+    @media (max-width: 1200px) {
+      grid-template-columns: repeat(7, 100px);
+    }
+
+    @media (max-width: 800px) {
+      grid-template-columns: repeat(7, 70px);
+    }
+
+    @media (max-width: 600px) {
+      grid-template-columns: repeat(7, 50px);
+    }
+  }
+
+  &__day {
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    border: 0.5px solid #000;
+    opacity: 0.3;
+    overflow-x: hidden;
+
+    @media (max-width: 1200px) {
+      height: 100px;
+    }
+
+    @media (max-width: 800px) {
+      height: 70px;
+    }
+
+    @media (max-width: 600px) {
+      height: 50px;
+    }
+
+    &:hover {
+      border: 3px solid #818181;
+    }
+
+    &-info {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &InMonth {
+      @media (max-width: 600px) {
+        font-size: 12px;
+      }
+    }
+
+    &InWeek {
+      @media (max-width: 600px) {
+        font-size: 12px;
+      }
+    }
+
+    &-title {
+      width: 100%;
+      padding: 5px;
+      display: flex;
+      justify-content: start;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    &--current {
+      opacity: 1;
+    }
+
+    &--active {
+      background-color: #dbf5d6;
+    }
+  }
+}
+
+.calendar__day>.calendar__day-title {
+  border: 1px solid #000;
+
+  &:hover {
+    box-shadow: rgba(3, 7, 20, 0.3) 0 1px 10px;
+  }
+}

@@ -13,6 +13,7 @@ import classNames from 'classnames';
 import titleImage from '../image/passport.svg';
 import { CalendarContext } from './CalendarContext';
 import deleteImage from '../image/delete.svg';
+import { DateInputError } from './DateInputError';
 
 export const EventForm = () => {
   const {
@@ -27,6 +28,7 @@ export const EventForm = () => {
     setEventDays,
   } = useContext(CalendarContext);
 
+  const [dateError, setDateError] = useState(false);
   const [disabletSubmit, setDisabletSubmit] = useState(!editForm);
   const [date, setDate] = useState(editForm
     ? propsToEdit?.date || ''
@@ -49,22 +51,32 @@ export const EventForm = () => {
 
     if ((isNaN(+query[query.length - 1]) && prevLength < query.length)
       || query[query.length - 1] === ' ') {
+      setDateError(true);
+
       return;
     }
 
     if (query[0] > '3' || (query[0] === '3' && query[1] > '1')) {
+      setDateError(true);
+
       return;
     }
 
     if (query[0] === '0' && query[1] === '0') {
+      setDateError(true);
+
       return;
     }
 
     if (query[3] > '1' || (query[3] === '1' && query[4] > '2')) {
+      setDateError(true);
+
       return;
     }
 
     if (query[3] === '0' && query[4] === '0') {
+      setDateError(true);
+
       return;
     }
 
@@ -82,14 +94,6 @@ export const EventForm = () => {
       }
     }
 
-    if (stringDate.length < 10) {
-      setDisabletSubmit(true);
-    }
-
-    if (stringDate.length >= 10) {
-      setDisabletSubmit(false);
-    }
-
     stringDate = stringDate.slice(0, 10);
 
     setDate(stringDate);
@@ -103,6 +107,69 @@ export const EventForm = () => {
     }
   };
 
+  const getLocalDate = (localDate: Date) => {
+    let result = '';
+
+    if (localDate.toLocaleDateString('de-DE')
+      .split('.')[1].length < 2) {
+      result += localDate.toLocaleDateString('de-DE')
+        .split('.')[0];
+      result += `.0${localDate.toLocaleDateString('de-DE')
+        .split('.')[1]}`;
+      result += `.${localDate.toLocaleDateString('de-DE')
+        .split('.')[2]}`;
+    } else {
+      result = localDate.toLocaleDateString('de-DE');
+    }
+
+    result += ` ${localDate.getHours()}:${localDate.getMinutes()}`;
+
+    return result;
+  };
+
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (editForm) {
+      if (propsToEdit?.createdAt && title && date) {
+        const currTime = new Date();
+
+        const updatedAt = getLocalDate(currTime);
+
+        saveEventDays({
+          id: propsToEdit.id,
+          date,
+          title,
+          description,
+          time,
+          createdAt: propsToEdit?.createdAt,
+          updatedAt,
+        });
+      }
+    } else if (title && date) {
+      const id = eventDays.length
+        ? Math.max(...eventDays.map(item => item.id)) + 1
+        : 1;
+
+      const currTime = new Date();
+
+      const createdAt = getLocalDate(currTime);
+
+      saveEventDays({
+        id,
+        date,
+        title,
+        description,
+        time,
+        createdAt,
+      });
+    }
+
+    setShowEventForm(false);
+    setEditForm(false);
+    setPropsToEdit(null);
+  };
+
   useEffect(() => {
     document.body.addEventListener('keydown', closeOnEscapeKeyDown);
 
@@ -110,6 +177,18 @@ export const EventForm = () => {
       document.body.removeEventListener('keydown', closeOnEscapeKeyDown);
     };
   }, []);
+
+  useEffect(() => {
+    if (date.length < 10) {
+      setDisabletSubmit(true);
+    }
+
+    if (date.length >= 10) {
+      setDisabletSubmit(false);
+    }
+
+    setDateError(false);
+  }, [date.length]);
 
   return ReactDOM.createPortal(
     <CSSTransition
@@ -125,88 +204,7 @@ export const EventForm = () => {
           <form
             className="event-form"
             onClick={event => event.stopPropagation()}
-            onSubmit={event => {
-              event.preventDefault();
-
-              if (editForm) {
-                if (propsToEdit?.createdAt && title && date) {
-                  const currTime = new Date();
-
-                  const getLocalDate = (localDate: Date) => {
-                    let result = '';
-
-                    if (localDate.toLocaleDateString('de-DE')
-                      .split('.')[1].length < 2) {
-                      result += localDate.toLocaleDateString('de-DE')
-                        .split('.')[0];
-                      result += `.0${localDate.toLocaleDateString('de-DE')
-                        .split('.')[1]}`;
-                      result += `.${localDate.toLocaleDateString('de-DE')
-                        .split('.')[2]}`;
-                    } else {
-                      result = localDate.toLocaleDateString('de-DE');
-                    }
-
-                    result += ` ${localDate.getHours()}:${localDate.getMinutes()}`;
-
-                    return result;
-                  };
-
-                  const updatedAt = getLocalDate(currTime);
-
-                  saveEventDays({
-                    id: propsToEdit.id,
-                    date,
-                    title,
-                    description,
-                    time,
-                    createdAt: propsToEdit?.createdAt,
-                    updatedAt,
-                  });
-                }
-              } else if (title && date) {
-                const id = eventDays.length
-                  ? Math.max(...eventDays.map(item => item.id)) + 1
-                  : 1;
-
-                const currTime = new Date();
-
-                const getLocalDate = (localDate: Date) => {
-                  let result = '';
-
-                  if (localDate.toLocaleDateString('de-DE')
-                    .split('.')[1].length < 2) {
-                    result += localDate.toLocaleDateString('de-DE')
-                      .split('.')[0];
-                    result += `.0${localDate.toLocaleDateString('de-DE')
-                      .split('.')[1]}`;
-                    result += `.${localDate.toLocaleDateString('de-DE')
-                      .split('.')[2]}`;
-                  } else {
-                    result = localDate.toLocaleDateString('de-DE');
-                  }
-
-                  result += ` ${localDate.getHours()}:${localDate.getMinutes()}`;
-
-                  return result;
-                };
-
-                const createdAt = getLocalDate(currTime);
-
-                saveEventDays({
-                  id,
-                  date,
-                  title,
-                  description,
-                  time,
-                  createdAt,
-                });
-              }
-
-              setShowEventForm(false);
-              setEditForm(false);
-              setPropsToEdit(null);
-            }}
+            onSubmit={onSubmit}
           >
             <div className="event-form__content">
               <div className="event-form__header">
@@ -264,8 +262,18 @@ export const EventForm = () => {
                 <div className="event-form__time">
                   <label
                     className="event-form__date-box"
+                    onClick={(event) => event.preventDefault()}
                   >
                     Date
+                    <button
+                      type="button"
+                      onClick={() => setDate(
+                        getLocalDate(new Date()).slice(0, 10),
+                      )}
+                      className="event-form__date__today"
+                    >
+                      today
+                    </button>
                     <input
                       onChange={(event) => inputChange(event, date.length)}
                       value={date}
@@ -275,6 +283,11 @@ export const EventForm = () => {
                       placeholder="DD.MM.YY"
                       required
                     />
+                    {dateError && (
+                      <DateInputError
+                        clearErrorMessage={() => setDateError(false)}
+                      />
+                    )}
                   </label>
                   <label
                     className="event-form__hour-box"
