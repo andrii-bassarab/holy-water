@@ -1,0 +1,117 @@
+.calendar {
+  margin: 0 auto;
+  max-width: 1150px;
+
+  &__container {
+    margin: 0 50px;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+    margin: 10px 0;
+  }
+
+  &__setting {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  &__month {
+    width: 160px;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    align-items: center;
+
+    &__swiper {
+      padding: 5px;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+  }
+
+  &__year {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 30px;
+    border-radius: 5px;
+    background-color: transparent;
+    border: 1px solid rgb(34, 31, 31);
+    cursor: pointer;
+    outline: none;
+
+    &__image {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  &__add-event {
+    height: 30px;
+    width: 30px;
+    outline: none;
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    background-color: rgb(30, 133, 218);
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: rgb(14 37 114 / 50%) 0 1px 10px;
+    }
+  }
+
+  &__layout {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(7, 150px);
+    position: relative;
+    border: 1px solid #000;
+  }
+
+  &__day {
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    border: 0.5px solid #000;
+    opacity: 0.3;
+    overflow-x: hidden;
+
+    &:hover {
+      border: 3px solid #818181;
+    }
+
+    &-info {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    &-title {
+      width: 100%;
+      padding: 5px;
+      display: flex;
+      justify-content: start;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    &--current {
+      opacity: 1;
+    }
+
+    &--active {
+      background-color: #dbf5d6;
+    }
+  }
+}

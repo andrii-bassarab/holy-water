@@ -1,0 +1,73 @@
+.date-picker {
+  width: 400px;
+  padding: 15px;
+  background-color: #e1e1e1;
+  border-radius: 10px;
+  z-index: 1;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: 1;
+  transition: all 0.3s ease-in-out;
+  pointer-events: visible;
+
+  &__current-date {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    text-decoration-line: underline;
+  }
+
+  &__months {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  &__month {
+    margin-top: 10px;
+    height: 50px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+
+    &:hover {
+      outline: none;
+      border: 2px solid #f7f7f7;
+    }
+
+    &--active {
+      background-color: #efefef;
+    }
+  }
+
+  &__year {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+
+    &-current {
+      margin-left: 10px;
+    }
+
+    &-swiper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 25px;
+      width: 25px;
+      background-color: #efefef;
+      border: 1px solid #000;
+      border-radius: 5px;
+      outline: none;
+      cursor: pointer;
+
+      &-box {
+        display: flex;
+        gap: 5px;
+      }
+    }
+  }
+}
