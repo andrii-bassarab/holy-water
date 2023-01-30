@@ -88,10 +88,10 @@ export const CalendarProvider: React.FC<Props> = ({ children }) => {
   const [showEventForm, setShowEventForm] = useState(false);
   const [editForm, setEditForm] = useState(false);
   const [currYear, setCurrYear] = useState(
-    Number(localStorage.getItem('year') || Number(year)),
+    Number(localStorage.getItem('year')) || Number(year),
   );
   const [currMonth, setCurrMonth] = useState(
-    Number(localStorage.getItem('month') || Number(month)),
+    Number(localStorage.getItem('month')) || Number(month),
   );
   const monthText = months[currMonth - 1];
   const [propsToEdit, setPropsToEdit] = useState<EventDays | null>(null);

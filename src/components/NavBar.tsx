@@ -28,7 +28,6 @@ export const NavBar = () => {
 
   const rightErrowClick = () => {
     setCurrMonth(prevMonth => (prevMonth + 1) % 13 || 1);
-    localStorage.setItem('month', String(currMonth));
     setCurrYear((prevYear => (
       currMonth === 12 ? prevYear + 1 : prevYear
     )));
