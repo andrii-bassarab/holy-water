@@ -30,8 +30,7 @@ export const CellDay: React.FC<Props> = ({ cell }) => {
       <div
         className={classNames('calendar__day', {
           'calendar__day--current': cell.active,
-          'calendar__day--active': cell.active
-            && new Date().toDateString() === cell.key,
+          'calendar__day--active': new Date().toDateString() === cell.key,
         })}
       >
         <div className="calendar__day-info">
