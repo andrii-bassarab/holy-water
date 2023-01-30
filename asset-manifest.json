@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/holy-water/static/css/main.3f7b882f.css",
-    "main.js": "/holy-water/static/js/main.7062f0a4.js",
+    "main.js": "/holy-water/static/js/main.590c2538.js",
     "static/media/delete.svg": "/holy-water/static/media/delete.267b4dc49ad97b9f54915ed90c0c8dbc.svg",
     "static/media/passport.svg": "/holy-water/static/media/passport.eee4433926a9f630cb5df795b0775c2f.svg",
     "static/media/left-arrow.svg": "/holy-water/static/media/left-arrow.c45a67d096d17ade563056920ca79e72.svg",
@@ -9,10 +9,10 @@
     "static/media/right-arrow.svg": "/holy-water/static/media/right-arrow.b16dea59b5b89c19dbb367638c1a770c.svg",
     "index.html": "/holy-water/index.html",
     "main.3f7b882f.css.map": "/holy-water/static/css/main.3f7b882f.css.map",
-    "main.7062f0a4.js.map": "/holy-water/static/js/main.7062f0a4.js.map"
+    "main.590c2538.js.map": "/holy-water/static/js/main.590c2538.js.map"
   },
   "entrypoints": [
     "static/css/main.3f7b882f.css",
-    "static/js/main.7062f0a4.js"
+    "static/js/main.590c2538.js"
   ]
 }
