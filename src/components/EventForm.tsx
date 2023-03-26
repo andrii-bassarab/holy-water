@@ -1,11 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-/* eslint-disable consistent-return */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable no-restricted-globals */
-/* eslint-disable react/button-has-type */
 import React, { useContext, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { CSSTransition } from 'react-transition-group';
@@ -14,6 +6,7 @@ import titleImage from '../image/passport.svg';
 import { CalendarContext } from './CalendarContext';
 import deleteImage from '../image/delete.svg';
 import { DateInputError } from './DateInputError';
+import { useTransition, animated } from 'react-spring';
 
 export const EventForm = () => {
   const {
@@ -111,6 +104,16 @@ export const EventForm = () => {
     let result = '';
 
     if (localDate.toLocaleDateString('de-DE')
+      .split('.')[0].length < 2) {
+      result += `0${localDate.toLocaleDateString('de-DE')
+        .split('.')[0]}`;
+      result += `.0${localDate.toLocaleDateString('de-DE')
+        .split('.')[1]}`;
+      result += `.${localDate.toLocaleDateString('de-DE')
+        .split('.')[2]}`;
+    }
+
+    if (localDate.toLocaleDateString('de-DE')
       .split('.')[1].length < 2) {
       result += localDate.toLocaleDateString('de-DE')
         .split('.')[0];
@@ -118,7 +121,9 @@ export const EventForm = () => {
         .split('.')[1]}`;
       result += `.${localDate.toLocaleDateString('de-DE')
         .split('.')[2]}`;
-    } else {
+    }
+
+    if (localDate.toLocaleDateString('de-DE').length === 10) {
       result = localDate.toLocaleDateString('de-DE');
     }
 
@@ -190,16 +195,23 @@ export const EventForm = () => {
     setDateError(false);
   }, [date.length]);
 
+  const transition = useTransition(showEventForm, {
+    from: { opacity: 0, transform: 'translateX(50px)' },
+    enter: { opacity: 1, transform: 'translateX(0px)' },
+    leave: { opacity: 0, transform: 'translateX(50px)' },
+    config: {
+      duration: 100,
+    },
+  });
+
   return ReactDOM.createPortal(
-    <CSSTransition
-      in={showEventForm}
-      unmountOnExit
-      timeout={{ enter: 0, exit: 300 }}
-    >
-      <div
+    transition((style, item) => (
+      item ? (
+        <div
         className="add-event"
         onClick={() => setShowEventForm(false)}
       >
+        <animated.div style={{ ...style, position: 'relative', zIndex: 2, }}>
         <div className="add-event__content">
           <form
             className="event-form"
@@ -342,8 +354,9 @@ export const EventForm = () => {
             </div>
           </form>
         </div>
-      </div>
-    </CSSTransition>,
+      </animated.div>
+      </div>) : null
+    )),
     document.getElementById('root') as Element | DocumentFragment,
   );
 };

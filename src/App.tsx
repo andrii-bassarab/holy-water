@@ -1,8 +1,3 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable react/button-has-type */
 import React, { useContext, useEffect, useState } from 'react';
 import './App.scss';
 import { CalendarContext } from './components/CalendarContext';
@@ -111,9 +106,9 @@ function App() {
       >
         <div className="calendar__container">
           <NavBar />
+          <DatePicker />
+          <EventForm />
           <div className="calendar__layout">
-            {showDatePicker && <DatePicker />}
-            {showEventForm && <EventForm />}
             {calendar.map(dayCell => (
               <CellDay cell={dayCell} key={dayCell.key} />
             ))}

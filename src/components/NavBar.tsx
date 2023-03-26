@@ -1,9 +1,9 @@
-/* eslint-disable react/button-has-type */
 import { useContext, useEffect } from 'react';
 import { CalendarContext } from './CalendarContext';
 import calendarImg from '../image/calendar-image.svg';
 import rightArrow from '../image/right-arrow.svg';
 import leftArrow from '../image/left-arrow.svg';
+import styles from '../styles/NavBar.module.scss';
 
 export const NavBar = () => {
   const {
@@ -35,14 +35,18 @@ export const NavBar = () => {
   };
 
   useEffect(() => {
-    localStorage.setItem('year', String(currYear));
-    localStorage.setItem('month', String(currMonth));
+    if (currYear) {
+      localStorage.setItem('year', JSON.stringify(currYear));
+    }
+    if (currMonth) {
+      localStorage.setItem('month', JSON.stringify(currMonth));
+    }
   }, [currMonth, currYear]);
 
   return (
-    <div className="calendar__header">
+    <div className={styles.calendar__header}>
       <button
-        className="calendar__add-event"
+        className={(styles['calendar__add-event'])}
         onClick={() => {
           setShowEventForm(prevState => !prevState);
           setShowDatePicker(false);
@@ -51,39 +55,46 @@ export const NavBar = () => {
       >
         +
       </button>
-      <div className="calendar__setting">
-        <div className="calendar__month">
+      <div className={styles.calendar__setting}>
+        <div className={styles.calendar__month}>
           <button
-            className="calendar__month__swiper"
+            className={styles.calendar__month__swiper}
             onClick={leftErrowClick}
           >
             <img
               src={leftArrow}
               alt="leftArrow"
-              className="calendar__month__swiper--img"
+              className={styles['calendar__month__swiper--img']}
             />
           </button>
-          <p className="calendar__month__text">{`${monthText} ${currYear}`}</p>
+          <p className={styles.calendar__month__text}>
+            {`${monthText} ${currYear}`}
+          </p>
           <button
-            className="calendar__month__swiper"
+            className={styles.calendar__month__swiper}
             onClick={rightErrowClick}
           >
             <img
               src={rightArrow}
               alt="rightArrow"
-              className="calendar__month__swiper--img"
+              className={styles['calendar__month__swiper--img']}
             />
           </button>
         </div>
+        {/* <label className="checkbox">
+          <input type="checkbox" />
+          <span className="checkmark" />
+          Checkbox Label
+        </label> */}
         <button
-          className="calendar__year"
+          className={styles.calendar__year}
           onClick={(event) => {
             event.stopPropagation();
             setShowDatePicker(prevState => !prevState);
           }}
         >
           <img
-            className="calendar__year__image"
+            className={styles.calendar__year__image}
             src={calendarImg}
             alt="year"
           />

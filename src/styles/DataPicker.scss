@@ -3,13 +3,13 @@
   padding: 15px;
   background-color: #e1e1e1;
   border-radius: 10px;
-  z-index: 1;
+  z-index: 2;
 
   position: absolute;
   top: 0;
   right: 0;
+
   opacity: 1;
-  transition: all 0.3s ease-in-out;
   pointer-events: visible;
 
   @media (max-width: 600px) {

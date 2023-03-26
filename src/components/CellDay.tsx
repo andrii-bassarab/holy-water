@@ -1,4 +1,3 @@
-/* eslint-disable react/button-has-type */
 import classNames from 'classnames';
 import { useContext } from 'react';
 import { CalendarItem } from '../types/CalendarItem';
